@@ -1,0 +1,11 @@
+release/LoginForm.o
+release/MainWindow.o
+release/Menu.o
+release/Nav.o
+release/Note.o
+release/main.o
+release/moc_LoginForm.o
+release/moc_MainWindow.o
+release/moc_Menu.o
+release/moc_Nav.o
+release/moc_Note.o

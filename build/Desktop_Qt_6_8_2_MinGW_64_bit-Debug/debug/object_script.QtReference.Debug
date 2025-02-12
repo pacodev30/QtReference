@@ -1,0 +1,11 @@
+debug/LoginForm.o
+debug/MainWindow.o
+debug/Menu.o
+debug/Nav.o
+debug/Note.o
+debug/main.o
+debug/moc_LoginForm.o
+debug/moc_MainWindow.o
+debug/moc_Menu.o
+debug/moc_Nav.o
+debug/moc_Note.o
