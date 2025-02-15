@@ -3,42 +3,70 @@
 Login::Login(QWidget *parent)
     : QWidget(parent)
 {
-    // WINDOW
     setFixedSize(250, 50);
 
-    // FORM BUTTONS
-    _loginBtn = new QPushButton("Login", this);
-    _loginBtn->move(20, 20);
-    _loginBtn->setCursor(Qt::PointingHandCursor);
-    QObject::connect(_loginBtn, SIGNAL(clicked(bool)), this, SLOT(openLoginForm()));
+    initWidgets();
+    manageLayers();
+    manageConnects();
+}
 
-    _logOutBtn = new QPushButton(this);
-    _logOutBtn->setIcon(QIcon("C:\\Users\\pacof\\DEV\\QT\\QtReference\\logo\\logout.png"));
-    _logOutBtn->setToolTip("Logout");
-    _logOutBtn->setVisible(false);
-    QObject::connect(_logOutBtn, SIGNAL(released()), this, SLOT(logout()));
+void Login::initWidgets()
+{
+    _pseudo_label = new QLabel(this);
+    _pseudo_label->setVisible(false);
 
-    // LAYERS
-    _loginForm = new LoginForm(this);
-    _loginBox = new QHBoxLayout(this);
-        _loginBox->addWidget(_loginBtn);
-        _loginBox->addWidget(_logOutBtn);
-        setLayout(_loginBox);
+    _login_btn = new QPushButton(this);
+        _login_btn->move(20, 20);
+        _login_btn->setCursor(Qt::PointingHandCursor);
+        _login_btn->setToolTip("Login");
+        _login_btn->setIcon(QIcon(":icon_desktop/login.png"));
+
+    _logOut_btn = new QPushButton(this);
+        _logOut_btn->setVisible(false);
+        _logOut_btn->setIcon(QIcon(":icon_desktop/logout.png"));
+        _logOut_btn->setToolTip("Logout");
+        _logOut_btn->setVisible(false);
+}
+
+void Login::manageLayers()
+{
+    _login_form = new LoginForm(this);
+        _main_hBox = new QHBoxLayout(this);
+        _main_hBox->addWidget(_pseudo_label);
+        _main_hBox->addWidget(_login_btn);
+        _main_hBox->addWidget(_logOut_btn);
+    setLayout(_main_hBox);
+}
+
+void Login::manageConnects()
+{
+    connect(_login_btn, SIGNAL(released()), this, SLOT(onLoginBtn()));
+    connect(_logOut_btn, SIGNAL(released()), this, SLOT(onLogoutBtn()));
 }
 
 // SLOTS
-void Login::openLoginForm()
+void Login::onLoginBtn()
 {
-    _loginForm->loginDialog()->exec();
-    _pseudo = _loginForm->pseudoEntry();
-    _loginBtn->setText(_loginForm->pseudoEntry());
-    _logOutBtn->setVisible(true);
+
+        _login_form->onLoginDialog()->exec();
+        _pseudo_label->setText(_login_form->onPseudoEntry());
+
+        if(!_login_form->onPseudoEntry().isEmpty())
+        {
+            _pseudo_label->setVisible(true);
+            _login_btn->setVisible(false);
+            _logOut_btn->setVisible(true);
+        }
+
+
 }
 
-void Login::logout()
+void Login::onLogoutBtn()
 {
-    _loginBtn->setText("Login");
-    _logOutBtn->setVisible(false);
+    _pseudo_label->setVisible(false);
+    _login_btn->setVisible(true);
+    _logOut_btn->setVisible(false);
 }
+
 
 

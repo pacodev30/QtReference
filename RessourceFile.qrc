@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/img"/>
+    <qresource prefix="/">
+        <file>icon_desktop/delete.png</file>
+        <file>icon_desktop/download.png</file>
+        <file>icon_desktop/home.png</file>
+        <file>icon_desktop/like.png</file>
+        <file>icon_desktop/login.png</file>
+        <file>icon_desktop/logout.png</file>
+        <file>icon_desktop/newFile.png</file>
+        <file>icon_desktop/newFolder.png</file>
+        <file>icon_desktop/openFile.png</file>
+        <file>icon_desktop/quit.png</file>
+    </qresource>
+</RCC>

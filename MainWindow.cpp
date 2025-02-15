@@ -6,68 +6,70 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    // INIT WIDGETS
+    manageWidgets();
+    manageMenu();
+    manageToolbar();
+    manageConnect();
+}
+
+void MainWindow::manageWidgets()
+{
     _notes = new QList<Note*>;
-    _titleInput = new QInputDialog(this);
+    _note_dialog = new QInputDialog(this);
     _login = new Login(this);
 
-    // FILE MENU
-    _fileMenu = menuBar()->addMenu("&File");
-        // New
-        _newAction = new QAction("&New note", this);
-        _newAction->setShortcut(QKeySequence("Ctrl+N"));
-        _newAction->setIcon(QIcon("C:\\Users\\pacof\\DEV\\QT\\QtReference\\logo\\new.png"));
+    // Actions
+    _newNote_action = new QAction(tr("&New note"), this);
+    _newNote_action->setShortcut(QKeySequence("Ctrl+N"));
+    _newNote_action->setIcon(QIcon(":icon_desktop/newFile.png"));
 
+    _quit_action = new QAction(tr("&Quit"), this);
+    _quit_action->setShortcut(QKeySequence("Ctrl+Q"));
+    _quit_action->setIcon(QIcon(":icon_desktop/quit.png"));
 
-        _fileMenu->addAction(_newAction);
-        connect(_newAction, SIGNAL(triggered(bool)), this, SLOT(openTitleDialog()));
-
-        // Quit
-        _quitAction = new QAction("&Quit", this);
-        _quitAction->setShortcut(QKeySequence("Ctrl+Q"));
-        _quitAction->setIcon(QIcon("C:\\Users\\pacof\\DEV\\QT\\QtReference\\logo\\quit.png"));
-
-        _fileMenu->addAction(_quitAction);
-        connect(_quitAction, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
-
-    // EDIT MENU
-    _editMenu = menuBar()->addMenu("&Edit");
-
-    // TOOLBAR
-    _fileToolBar = addToolBar("File");
-    _fileToolBar->addAction(_newAction);
-    _fileToolBar->addAction(_quitAction);
-    _fileToolBar->addSeparator();
-
-    _utilToolBar = addToolBar("Util");
-    _utilToolBar->addWidget(_login);
-
-    // CENTRAL AREA
-    _centralArea = new QMdiArea(this);
-
-    setCentralWidget(_centralArea);
-    setWindowTitle("Notes");
+    // Area
+    _central_mdi = new QMdiArea(this);
+    setCentralWidget(_central_mdi);
+    setWindowTitle(tr("Dashboard"));
 }
 
-void MainWindow::addNoteToList(Note *note)
+void MainWindow::manageMenu()
 {
-    _notes->emplaceBack(note);
-    _centralArea->addSubWindow(note);
-    note->show();
+    _file_menu = menuBar()->addMenu(tr("&File"));
+    _file_menu->addAction(_newNote_action);
+    _file_menu->addAction(_quit_action);
+    _edit_menu = menuBar()->addMenu(tr("&Edit"));
 }
 
-void MainWindow::openTitleDialog()
+void MainWindow::manageToolbar()
+{
+    _file_toolBar = addToolBar(tr("File"));
+    _file_toolBar->addAction(_newNote_action);
+    _file_toolBar->addAction(_quit_action);
+    _file_toolBar->addSeparator();
+
+    _util_toolBar = addToolBar(tr("Tools"));
+    _util_toolBar->addWidget(_login);
+}
+
+void MainWindow::manageConnect()
+{
+    connect(_newNote_action, SIGNAL(triggered(bool)), this, SLOT(on_noteDialog()));
+    connect(_quit_action, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
+}
+
+// SLOTS
+void MainWindow::on_noteDialog()
 {
     bool ok;
-    QString title = _titleInput->getText(this, "Title", "Enter title", QLineEdit::Normal, QString(), &ok);
+    QString title = _note_dialog->getText(this, "Title", "Enter title", QLineEdit::Normal, QString(), &ok);
     if(ok && !title.isEmpty())
     {
         Note *note = new Note(title, this);
-        addNoteToList(note);
 
-        foreach(Note *n, *_notes) {
-            qDebug() << n->getTitle();
-        }
+        _notes->emplaceBack(note);
+        _central_mdi->addSubWindow(note);
+        note->show();
     }
 }
 

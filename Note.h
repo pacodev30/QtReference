@@ -15,13 +15,13 @@ public:
     QString getTitle() const;
 
 public slots:
-    void onTitleCheck();
-    void onTitleChange(QString newTitle);
+    void on_titleCheck();
+    void on_titleLine(QString newTitle);
 
 private:
-    QHBoxLayout *_titleHbox;
-    QVBoxLayout *_mainVBox;
-    QLineEdit *_title;
-    QTextEdit *_content;
-    QCheckBox *_titleCheck;
+    QHBoxLayout *_title_hBox;
+    QVBoxLayout *_main_vBox;
+    QLineEdit *_title_line;
+    QTextEdit *_content_text;
+    QCheckBox *_title_check;
 };

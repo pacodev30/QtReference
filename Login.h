@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QString>
 #include <QHBoxLayout>
+#include <QLabel>
 
 class Login : public QWidget
 {
@@ -12,14 +13,17 @@ class Login : public QWidget
 public:
     Login(QWidget *parent = nullptr);
 
+    void initWidgets();
+    void manageLayers();
+    void manageConnects();
+
 public slots:
-    void openLoginForm();
-    void logout();
+    void onLoginBtn();
+    void onLogoutBtn();
 
 private:
-    QHBoxLayout *_loginBox;
-    LoginForm *_loginForm;
-    QPushButton *_loginBtn, *_logOutBtn;
-
-    QString _pseudo;
+    QHBoxLayout *_main_hBox;
+    LoginForm *_login_form;
+    QPushButton *_login_btn, *_logOut_btn;
+    QLabel *_pseudo_label;
 };

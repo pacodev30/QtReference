@@ -15,24 +15,23 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
 
-public slots:
-    /**
-     * @brief addNoteToList
-     * @param note
-     */
-    void addNoteToList(Note *note);
+    void manageWidgets();
+    void manageMenu();
+    void manageToolbar();
+    void manageConnect();
 
+public slots:
     /**
      * @brief openTitleDialog
      */
-    void openTitleDialog();
+    void on_noteDialog();
 
 private:
-    QMenu *_fileMenu, *_editMenu;
-    QAction *_newAction, *_quitAction;
-    QMdiArea *_centralArea;
-    QInputDialog *_titleInput;
-    QToolBar *_fileToolBar, *_utilToolBar;
+    QMenu *_file_menu, *_edit_menu;
+    QAction *_newNote_action, *_quit_action;
+    QMdiArea *_central_mdi;
+    QInputDialog *_note_dialog;
+    QToolBar *_file_toolBar, *_util_toolBar;
     Login *_login;
 
     QList<Note*> *_notes;

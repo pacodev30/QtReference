@@ -14,20 +14,20 @@ class LoginForm : public QWidget
 public:
     LoginForm(QWidget *parent = nullptr);
 
-    QDialog* loginDialog() const;
-    QString pseudoEntry() const;
+    QDialog* onLoginDialog() const;
+    QString onPseudoEntry() const;
 
 public slots:
     void submit();
 
 private:
-    QDialog *_loginDialog;
+    QDialog *_login_dialog;
     QFormLayout *_form;
 
-    QLineEdit *_pseudoLine, *_passwordLine;
-    QPushButton *_loginBtn, *_submitBtn;
+    QLineEdit *_pseudo_line, *_password_line;
+    QPushButton *_login_btn, *_submit_btn;
 
-    QString _pseudoEntry;
-    QLabel *_pseudoAlert, *_passwordAlert;
+    QString _pseudo_entry;
+    QLabel *_pseudo_alert, *_password_alert;
 
 };
